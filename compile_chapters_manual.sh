@@ -91,28 +91,28 @@ echo
 ## Make PDFs for all Markdown files in the main directory
 echo -e "Making PDFs from each of your Markdown files and saving them to: \n$filedir/PDF/$date/"
 ### Check if there is a PDF directory already. If not, make one. If something named "pdf" already exists but is not a directory, give a warning and quit.
-if [[ ! -e ./PDF ]]; then
-    mkdir ./PDF
+if [[ ! -e $filedir/PDF ]]; then
+    mkdir $filedir/PDF
 fi
 ### Same procedure as above, but checks if there is a PDF subdirectory for this month.
-if [[ ! -e ./PDF ]]; then
-    mkdir ./PDF
+if [[ ! -e $filedir/PDF ]]; then
+    mkdir $filedir/PDF
     echo "Create directory at ./PDF"
 fi
-if [[ ! -e ./PDF/$date ]]; then
-    mkdir ./PDF/$date
+if [[ ! -e $filedir/PDF/$date ]]; then
+    mkdir $filedir/PDF/$date
     echo "Create directory at ./PDF/$date"
 fi
 for file in $prefix*.md; do
   echo "*** $date"_"${file%.md}.pdf"
-  pandoc "$file" --latex-engine=$latexengine --template=$template  $metadata -o ./PDF/$date/${file%.md}.pdf
+  pandoc "$file" --latex-engine=$latexengine --template=$template  $metadata -o $filedir/PDF/$date/${file%.md}.pdf
 done
 echo
 
 ## If bibtex file is found, make a standalone PDF for the bibliography based on the Bibtex file
 if [[ -e $bibfile ]]; then
   echo "Making a PDF of the bibliography and saving to: \n$filedir/Biblio"
-  pandoc --filter=pandoc-citeproc --latex-engine=$latexengine --template=$template $bibfile -o ./Biblio/$date"_biblio.pdf"
+  pandoc --filter=pandoc-citeproc --latex-engine=$latexengine --template=$template $bibfile -o $filedir/Biblio/$date"_biblio.pdf"
   echo
 else echo "Did not find a Bibtex file. Moving on..."
 fi
@@ -132,56 +132,56 @@ echo
 
 ## Convert to DOC files and place in ./DOC directory
 ### Check for DOC directory, make if missing.
-if [[ ! -e ./DOC ]]; then
-    mkdir ./DOC
+if [[ ! -e $filedir/DOC ]]; then
+    mkdir $filedir/DOC
     echo "Created directory at ./DOC"
 fi
-if [[ ! -e ./DOC/$date ]]; then
-    mkdir ./DOC/$date
+if [[ ! -e $filedir/DOC/$date ]]; then
+    mkdir $filedir/DOC/$date
     echo "Create directory at ./DOC/$date"
 fi
 ### Make DOC files from Markdown.
 echo -e "Making DOC files and saving them to: \n$filedir/DOC/$date/"
 for file in $prefix*.md; do
-  pandoc $file --template=$template -o ./DOC/$date/${file%.md}.doc
+  pandoc $file --template=$template -o $filedir/DOC/$date/${file%.md}.doc
   echo "***  ./DOC/$date/${file%.md}.doc"
 done
 echo
 
 ## Make HTML from Markdown
 ### Check for HTML directory, make if missing.
-if [[ ! -e ./HTML ]]; then
-  mkdir ./HTML
+if [[ ! -e $filedir/HTML ]]; then
+  mkdir $filedir/HTML
   echo "Created directory at ./HTML"
 fi
-if [[ ! -e ./HTML/$date ]]; then
-  mkdir ./HTML/$date
+if [[ ! -e $filedir/HTML/$date ]]; then
+  mkdir $filedir/HTML/$date
   echo "Create directory at ./HTML/$date"
 fi
 ### Make HTML files from Markdown.
 echo -e "Converting to HTML and saving to: \n$filedir/HTML/"
 for file in *.md; do
-  pandoc $file -c $css -o ./HTML/$date/${file%.md}.html
+  pandoc $file -c $css -o $filedir/HTML/$date/${file%.md}.html
   echo "***  ${file%.md}.html"
 done
 echo
 
 ## Retain monthly Markdown and Bibtex backups
-if [[ ! -e ./MD ]]; then
-  mkdir ./MD/$date
+if [[ ! -e $filedir/MD ]]; then
+  mkdir $filedir/MD/$date
   echo "Created directory at $filedir/MD/$date"
 fi
-if [[ ! -e ./MD/$date ]]; then
-  mkdir ./MD/$date
+if [[ ! -e $filedir/MD/$date ]]; then
+  mkdir $filedir/MD/$date
   echo "Created directory at $filedir/MD/$date"
 fi
-if [[ ! -e ./Biblio ]]; then
-  mkdir ./Biblio
+if [[ ! -e $filedir/Biblio ]]; then
+  mkdir $filedir/Biblio
   echo "Created directory at $filedir/Biblio"
 fi
 echo -e "Archiving Markdown files to: \n$filedir/MD/$date/"
 for file in $prefix*.md; do
-  cp $file ./MD/$date/
+  cp $file $filedir/MD/$date/
   echo "***  $file"
 done
 echo
@@ -193,13 +193,13 @@ echo
 ## Send backups of Markdown, Bibtex, PDF, and DOC files to DropBox...
 if [[ -e $dropboxdir ]]; then
   echo "Sending PDF, Markdown, Biblio and DOC backups to DropBox..."
-  cp -R ./PDF/$date $dropboxdir/
+  cp -R $filedir/PDF/$date $dropboxdir/
   echo "- PDFs sent to Dropbox"
-  cp -R ./MD/$date $dropboxdir/
+  cp -R $filedir/MD/$date $dropboxdir/
   echo "- Markdown sent to Dropbox"
-  cp -R ./DOC/$date $dropboxdir/
+  cp -R $filedir/DOC/$date $dropboxdir/
   echo "- DOCs sent to Dropbox"
-  cp -R ./Biblio $dropboxdir/
+  cp -R $filedir/Biblio $dropboxdir/
   echo "- Biblio sent to Dropbox"
 else "No Dropbox directory found in config. Moving on..."
 fi

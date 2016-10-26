@@ -44,23 +44,23 @@ cd $filedir
 
 ## Make PDFs for all Markdown files in the main directory
 ### Check if there is a PDF directory already. If not, make one. If something named "pdf" already exists but is not a directory, give a warning and quit.
-if [[ ! -e ./PDF ]]; then
-    mkdir ./PDF
+if [[ ! -e $filedir/PDF ]]; then
+    mkdir $filedir/PDF
 fi
 ### Same procedure as above, but checks if there is a PDF subdirectory for this month.
-if [[ ! -e ./PDF ]]; then
-    mkdir ./PDF
+if [[ ! -e $filedir/PDF ]]; then
+    mkdir $filedir/PDF
 fi
-if [[ ! -e ./PDF/$date ]]; then
-    mkdir ./PDF/$date
+if [[ ! -e $filedir/PDF/$date ]]; then
+    mkdir $filedir/PDF/$date
 fi
 for file in $prefix*.md; do
-  pandoc "$file" --latex-engine=$latexengine --template=$template  $metadata -o ./PDF/$date/${file%.md}.pdf
+  pandoc "$file" --latex-engine=$latexengine --template=$template  $metadata -o $filedir/PDF/$date/${file%.md}.pdf
 done
 
 ## If bibtex file is found, make a standalone PDF for the bibliography based on the Bibtex file
 if [[ -e $bibfile ]]; then
-  pandoc --filter=pandoc-citeproc --latex-engine=$latexengine --template=$template $bibfile -o ./Biblio/$date"_biblio.pdf"
+  pandoc --filter=pandoc-citeproc --latex-engine=$latexengine --template=$template $bibfile -o $filedir/Biblio/$date"_biblio.pdf"
 fi
 echo
 
@@ -73,50 +73,50 @@ pandoc $mdfiles --latex-engine=$latexengine $metadata -s -o $filedir/PDF/$date/$
 
 ## Convert to DOC files and place in ./DOC directory
 ### Check for DOC directory, make if missing.
-if [[ ! -e ./DOC ]]; then
-    mkdir ./DOC
+if [[ ! -e $filedir/DOC ]]; then
+    mkdir $filedir/DOC
 fi
-if [[ ! -e ./DOC/$date ]]; then
-    mkdir ./DOC/$date
+if [[ ! -e $filedir/DOC/$date ]]; then
+    mkdir $filedir/DOC/$date
 fi
 ### Make DOC files from Markdown.
 for file in $prefix*.md; do
-  pandoc $file --template=$template -o ./DOC/$date/${file%.md}.doc
+  pandoc $file --template=$template -o $filedir/DOC/$date/${file%.md}.doc
 done
 
 ## Make HTML from Markdown
 ### Check for HTML directory, make if missing.
-if [[ ! -e ./HTML ]]; then
-  mkdir ./HTML
+if [[ ! -e $filedir/HTML ]]; then
+  mkdir $filedir/HTML
 fi
-if [[ ! -e ./HTML/$date ]]; then
-  mkdir ./HTML/$date
+if [[ ! -e $filedir/HTML/$date ]]; then
+  mkdir $filedir/HTML/$date
 fi
 ### Make HTML files from Markdown.
 for file in *.md; do
-  pandoc $file -c $css -o ./HTML/$date/${file%.md}.html
+  pandoc $file -c $css -o $filedir/HTML/$date/${file%.md}.html
 done
 
 ## Retain monthly Markdown and Bibtex backups
-if [[ ! -e ./MD ]]; then
-  mkdir ./MD/$date
+if [[ ! -e $filedir/MD ]]; then
+  mkdir $filedir/MD/$date
 fi
-if [[ ! -e ./MD/$date ]]; then
-  mkdir ./MD/$date
+if [[ ! -e $filedir/MD/$date ]]; then
+  mkdir $filedir/MD/$date
 fi
-if [[ ! -e ./Biblio ]]; then
-  mkdir ./Biblio
+if [[ ! -e $filedir/Biblio ]]; then
+  mkdir $filedir/Biblio
 fi
 for file in $prefix*.md; do
-  cp $file ./MD/$date/
+  cp $file $filedir/MD/$date/
 done
 scp -r $dir $srv:$scpdir
 cp Biblio/Diss.bib Biblio/$date_Diss.bib
 
 ## Send backups of Markdown, Bibtex, PDF, and DOC files to DropBox...
 if [[ -e $dropboxdir ]]; then
-  cp -R ./PDF/$date $dropboxdir/
-  cp -R ./MD/$date $dropboxdir/
-  cp -R ./DOC/$date $dropboxdir/
-  cp -R ./Biblio $dropboxdir/
+  cp -R $filedir/PDF/$date $dropboxdir/
+  cp -R $filedir/MD/$date $dropboxdir/
+  cp -R $filedir/DOC/$date $dropboxdir/
+  cp -R $filedir/Biblio $dropboxdir/
 fi

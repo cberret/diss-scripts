@@ -17,13 +17,13 @@ I find it very useful to run these scripts as cron jobs, which automatically exe
 
 To write a cron job, enter the command line on your Linux/Mac/BSD/Unix/Posix machine and type:
 
-'''
+```
 crontab -e
-'''
+```
 
 Now go to a new line and enter something like this (subbing the actual path to your files, of course):
 
-'''
+```
 @hourly /path/to/compile_chapters_auto.sh
 @midnight /path/to/writing_progress.sh
-'''
+```

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### LOCAL DIRECTORY INFO ###
-filedir="/Users/charles/Cloud/Writing/Dissertation/WorkingFolder"
+filedir="/Users/charles/Cloud/Writing/Gitbooks/cberret/diss"
 dailies="$filedir/MD/daily"
 prefix="Diss_"
 today=$(date +%Y%m%d)

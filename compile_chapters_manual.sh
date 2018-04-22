@@ -3,7 +3,7 @@
 ### Its main purpose is to convert the markdown files in a given directory to a PDF.
 ### Then it sends those to DropBox for safekeeping along with the markdown source files.
 ### It will also convert those markdown files to HTML and automatically upload them to your personal  web server.
-### In all, this is a remarkable service to one's writing, but also a major distrcation from it
+### In all, this is a remarkable service to one's writing, but also a major distraction from it!
 
 #################################
 ##########  CONFIG  #############

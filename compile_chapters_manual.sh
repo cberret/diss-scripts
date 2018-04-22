@@ -10,26 +10,26 @@
 #################################
 
 ### LOCAL DIRECTORY INFO ###
-filedir="/Users/charles/Cloud/Writing/Dissertation/WorkingFolder" # Where you keep your markdown files on your local machine.
-bkdir="/Users/charles/Dropbox/Dissertation-Backups" # local directory to keep backups
-latexdir="/Users/charles/Cloud/Writing/Dissertation/ColumbiaFormat"
-latexbackupdir="/Users/charles/Cloud/Writing/Dissertation/ColumbiaFormat-Backups"
-dropboxdir="/Users/charles/Dropbox"
+filedir="/path/to" # Where you keep your markdown files on your local machine.
+bkdir="/path/to" # local directory to keep backups
+latexdir="/path/to"
+latexbackupdir="/path/to"
+dropboxdir="/path/to"
 
 ### LOCAL FILE INFO ###
 prefix="Diss_" # Naming prefix for the markdown files you want to use from your main directory.
-bibfile="/Users/charles/Cloud/Writing/Dissertation/Biblio/Diss.bib" # your bibtex file
-metadata="/Users/charles/Cloud/Writing/Dissertation/WorkingFolder/metadata.yaml" # your yaml file with pandoc metadata. you may also opt to leave this blank and put this info in the header of each markdown file.
-css="/Users/charles/Cloud/Writing/Dissertation/WorkingFolder/HTML/style.css" # css style for html page output
+bibfile="/path/to/Diss.bib" # your bibtex file
+metadata="/path/to/metadata.yaml" # your yaml file with pandoc metadata. you may also opt to leave this blank and put this info in the header of each markdown file.
+css="/path/to/style.css" # css style for html page output
 
 ### PANDOC AND LATEX VARS ###
 template="default" # standard pandoc template
 latexengine="xelatex" # standard latex engine for pandoc
 
 ### SERVER VARS ###
-srv="polytonic.net" # address of your web server. your system should be set up for public key login rather than password.
-srvdir="/var/www/diss/chapters/" # Web server directory to send HTML of chapters. Useful if you want your readers to see your most recent progress.
-scpdir="/samba/Diss/" # Directory for remote backups of Markdown, LaTeX, PDF, and DOC files.
+srv="example.net" # address of your web server. your system should be set up for public key login rather than password.
+srvdir="/var/www/diss" # Web server directory to send HTML of chapters. Useful if you want your readers to see your most recent progress.
+scpdir="/samba/" # Directory for remote backups of Markdown, LaTeX, PDF, and DOC files using Samba.
 
 ### MISC VARS ###
 date=$(date +%Y%m) ## Timestamp for files and directories. Default is given as year and month, e.g. 201609.
@@ -41,7 +41,7 @@ date=$(date +%Y%m) ## Timestamp for files and directories. Default is given as y
 ## Some encouragement!!
 echo
 echo "This script will turn your Markdown files into other publishable formats."
-echo "You must be making progress on your dissertation!"
+echo "Since you're running this script, you must be making progress on your dissertation!"
 echo
 sleep 1
 
